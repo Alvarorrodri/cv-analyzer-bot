@@ -1,0 +1,266 @@
+{
+  "name": "Bot CV telegram",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -624,
+        -272
+      ],
+      "id": "f7cca8c8-00e3-4a4c-bc89-7da50d8fb6ae",
+      "name": "Telegram Trigger",
+      "webhookId": "21f29ff0-7204-40f2-a785-ed4553eb4651",
+      "credentials": {
+        "telegramApi": {
+          "id": "SQGuC8jYZnCwN1xc",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "83f677a8-437e-4317-a2d9-99b60c6bf40a",
+              "leftValue": "={{ $json.message.document.mime_type }}",
+              "rightValue": "=application/pdf",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -416,
+        -272
+      ],
+      "id": "57967777-e266-4617-838e-48c93e9ac150",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $json.message.document.file_id }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -192,
+        -368
+      ],
+      "id": "be63ce36-ca81-4dd9-b0c2-0f46e87593f1",
+      "name": "Get a file",
+      "webhookId": "eed064ab-d77a-4e2f-aae0-538202b6962f",
+      "credentials": {
+        "telegramApi": {
+          "id": "sZ5El98qwqqODwji",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -32,
+        -368
+      ],
+      "id": "2e715868-0d65-4506-bc5d-953c6e07ff00",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Eres un experto en recursos humanos y selección de personal con años de experiencia revisando CVs.\n\nEl usuario te ha mandado su CV para que lo analices. Aquí está el contenido:\n\n{{ $json.text }}\n\nAnaliza el CV y responde en español con:\n1. Puntos fuertes del CV\n2. Puntos a mejorar\n3. Sugerencias concretas de mejora\n4. Valoración general del 1 al 10\n\nSé honesto, constructivo y específico.",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        128,
+        -368
+      ],
+      "id": "7d17cd93-ed99-4c4c-a549-8df5a9001779",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        336,
+        -256
+      ],
+      "id": "5fd4bc28-063b-45c9-a344-e90da64e8a93",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "27rXwybL4ANE7gxi",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        -368
+      ],
+      "id": "3c6e7fcc-88db-4b53-96a0-43f8a014a763",
+      "name": "Send a text message",
+      "webhookId": "affddb01-3456-4b39-98dd-9f21c3062bba",
+      "credentials": {
+        "telegramApi": {
+          "id": "sZ5El98qwqqODwji",
+          "name": "Telegram account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.from.id }}",
+        "text": "=👋 Hola! Para analizar tu CV mándamelo en formato PDF y te daré feedback detallado.",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -208,
+        -176
+      ],
+      "id": "d630e1b5-6ac8-48bf-8cbf-390e88f4ad9c",
+      "name": "Send a text message1",
+      "webhookId": "fe0da64d-4525-4ce7-a6be-664331d84a68",
+      "credentials": {
+        "telegramApi": {
+          "id": "sZ5El98qwqqODwji",
+          "name": "Telegram account 2"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Get a file",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "e9f669cf-76a4-4217-be8c-f888437243ec",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "179ae48f3a8eddbf16613c47cc06a99e50667fd869a49c2846bde908eb3cee72"
+  },
+  "id": "iNYB26kRsY9Pu6N6",
+  "tags": []
+}
