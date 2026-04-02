@@ -34,3 +34,12 @@ usando inteligencia artificial y da feedback profesional detallado.
 
 Álvaro Rodrigo Cantalejo  
 LinkedIn: linkedin.com/in/alvarorrodrigo
+
+
+
+<img width="1354" height="379" alt="Captura de pantalla 2026-04-01 171214" src="https://github.com/user-attachments/assets/ab24b509-3634-41bd-ac13-fe9b4d92c717" />
+
+
+<img width="329" height="679" alt="Captura de pantalla 2026-04-02 134456" src="https://github.com/user-attachments/assets/3a4c4bc1-55ee-4900-a26d-3fecf555f376" />
+
+
