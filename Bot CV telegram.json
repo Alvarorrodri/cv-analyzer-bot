@@ -19,8 +19,8 @@
       "webhookId": "21f29ff0-7204-40f2-a785-ed4553eb4651",
       "credentials": {
         "telegramApi": {
-          "id": "SQGuC8jYZnCwN1xc",
-          "name": "Telegram account"
+          "id": "sZ5El98qwqqODwji",
+          "name": "Bot-telegram-cv-analyzer"
         }
       }
     },
@@ -75,7 +75,7 @@
       "credentials": {
         "telegramApi": {
           "id": "sZ5El98qwqqODwji",
-          "name": "Telegram account 2"
+          "name": "Bot-telegram-cv-analyzer"
         }
       }
     },
@@ -124,7 +124,7 @@
       "credentials": {
         "groqApi": {
           "id": "27rXwybL4ANE7gxi",
-          "name": "Groq account"
+          "name": "Analyzer-CV-bot"
         }
       }
     },
@@ -148,7 +148,7 @@
       "credentials": {
         "telegramApi": {
           "id": "sZ5El98qwqqODwji",
-          "name": "Telegram account 2"
+          "name": "Bot-telegram-cv-analyzer"
         }
       }
     },
@@ -170,7 +170,7 @@
       "credentials": {
         "telegramApi": {
           "id": "sZ5El98qwqqODwji",
-          "name": "Telegram account 2"
+          "name": "Bot-telegram-cv-analyzer"
         }
       }
     }
@@ -256,7 +256,7 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "e9f669cf-76a4-4217-be8c-f888437243ec",
+  "versionId": "aae571ac-e188-44f4-8293-4b5f4b0b57e5",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "179ae48f3a8eddbf16613c47cc06a99e50667fd869a49c2846bde908eb3cee72"
